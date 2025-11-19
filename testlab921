@@ -1,0 +1,46 @@
+#include <gtest/gtest.h>
+#include "functions.h"
+
+// ========== TESTS FOR expr1 ==========
+
+TEST(Expression1, SimplePositive) {
+    EXPECT_FLOAT_EQ(expr1(3, 7), 70); // max=7, min=10, w=70
+}
+
+TEST(Expression1, MixedValues) {
+    EXPECT_FLOAT_EQ(expr1(-2, 5), -50); // max=5, min=-10, w=-50
+}
+
+TEST(Expression1, BothNegative) {
+    EXPECT_FLOAT_EQ(expr1(-4, -1), 5);  // max=-1, min=-5, w=5
+}
+
+// ========== TESTS FOR expr2 ==========
+
+TEST(Expression2, AbsLessThanZ) {
+    EXPECT_FLOAT_EQ(expr2(5, 10), 5);
+}
+
+TEST(Expression2, ZIsSmaller) {
+    EXPECT_FLOAT_EQ(expr2(20, 3), 3);
+}
+
+TEST(Expression2, NegativeValues) {
+    EXPECT_FLOAT_EQ(expr2(-5, 4), 4);
+}
+
+// ========== TESTS FOR LOGIC ==========
+
+TEST(Logic, Between5and10) {
+    EXPECT_TRUE(cond_between_5_10(6));
+    EXPECT_TRUE(cond_between_5_10(9));
+    EXPECT_FALSE(cond_between_5_10(5));
+    EXPECT_FALSE(cond_between_5_10(10));
+}
+
+TEST(Logic, Outside5and10) {
+    EXPECT_TRUE(cond_outside_5_10(1));
+    EXPECT_TRUE(cond_outside_5_10(5));
+    EXPECT_TRUE(cond_outside_5_10(10));
+    EXPECT_FALSE(cond_outside_5_10(7));
+}
