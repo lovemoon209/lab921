@@ -1,0 +1,53 @@
+#include <cmath>
+#include <gtest/gtest.h>
+
+#include "les.h"
+#include "mes.h"
+#include "sum.h"
+
+using namespace nsLes;
+using namespace nsMes;
+using namespace nsSum;
+
+void calculateS(double x_value, double eps_value) {
+  // ініціалізуємо глобальні змінні
+  x = x_value;
+  eps = eps_value;
+  a = 1.0;
+  s = 0.0;
+  n = 0;
+
+  nsSum::sum();
+}
+
+// Перевірка при x = 0
+TEST(SumTest, ZeroX) {
+  calculateS(0.0, 1e-6);
+  double expected = cos(0.0);
+  EXPECT_NEAR(s, expected, 1e-6);
+}
+
+// Перевірка при x = 1
+TEST(SumTest, PositiveX) {
+  calculateS(1.0, 1e-6);
+  double expected = cos(1.0);
+  EXPECT_NEAR(s, expected, 1e-5);
+}
+
+// Перевірка при x = -1
+TEST(SumTest, NegativeX) {
+  calculateS(-1.0, 1e-6);
+  double expected = cos(-1.0);
+  EXPECT_NEAR(s, expected, 1e-5);
+}
+
+// Перевірка, що n > 0
+TEST(SumTest, IterationCount) {
+  calculateS(0.5, 1e-6);
+  EXPECT_GT(n, 0);
+}
+
+int main(int argc, char **argv) {
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}
